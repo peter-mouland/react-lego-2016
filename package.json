@@ -11,7 +11,7 @@
     "build:dev": "webpack --config src/config/webpack.config.dev.js",
     "build:server": "NODE_ENV=production webpack --config src/config/webpack.config.server.js",
     "start": "NODE_ENV=production node compiled/server.js",
-    "start:dev": "nodemon src/server-entry.js --exec babel-node",
+    "start:dev": "nodemon src/server-entry.js --ignore src/app --exec babel-node",
     "lint": "sass-lint -v -q -c ./sass-lint.yml && eslint 'src/**/*.js'",
     "test": "npm run test:unit && npm run test:func",
     "test:unit": "npm run mocha -- 'src/**/*.spec.js'",
@@ -20,7 +20,7 @@
     "test:e2e-smoke": "npm run nightwatch -- --env chrome_win --tag smoke",
     "test:e2e-xb": "npm run nightwatch -- --env safari_osx,chrome_osx,firefox_win,firefox_osx,IE10,IE11,edge",
     "prenightwatch": "selenium-standalone install --version=2.53.1 && npm run prestart",
-    "nightwatch": "nightwatch -o ./tests/e2e/tests_output -c ./tests/config/nightwatch.conf.js",
+    "nightwatch": "NODE_ENV=production nightwatch -o ./tests/e2e/tests_output -c ./tests/config/nightwatch.conf.js",
     "mocha": "mocha --opts ./tests/config/mocha.opts "
   },
   "engines": {
@@ -93,9 +93,13 @@
     "pre-commit": "^1.1.2",
     "pre-push": "^0.1.1",
     "react-addons-test-utils": "^15.1.0",
+    "react-hot-loader": "^3.0.0-beta.5",
     "sass-lint": "^1.5.1",
     "selenium-standalone": "^5.6.4",
     "sinon": "^1.17.3",
-    "supertest": "^1.2.0"
+    "supertest": "^1.2.0",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-hot-middleware": "^2.10.0"
   }
 }
