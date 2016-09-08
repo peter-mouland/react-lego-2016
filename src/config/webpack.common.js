@@ -12,19 +12,40 @@ module.exports = {
   },
   plugins: [
     new ExtractTextPlugin('[name].css'),
-    new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
-      'process.env': {
-        PORT: JSON.stringify(process.env.PORT),
-        DEBUG: JSON.stringify(process.env.DEBUG),
-        NODE_ENV: JSON.stringify(process.env.NODE_ENV)
+      'process.env.PORT': JSON.stringify(process.env.PORT),
+      'process.env.DEBUG': JSON.stringify(process.env.DEBUG),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV)
+    }),
+    new webpack.LoaderOptionsPlugin({
+      options: {
+        postcss: [
+          cssnano({
+            autoprefixer: {
+              browsers: [
+                'safari 9',
+                'ie 10-11',
+                'last 2 Chrome versions',
+                'last 2 Firefox versions',
+                'edge 13',
+                'ios_saf 9.0-9.2',
+                'ie_mob 11',
+                'Android >= 4'
+              ],
+              cascade: false,
+              add: true,
+              remove: true
+            },
+            safe: true
+          })
+        ]
       }
     })
   ],
   resolve: {
-    modulesDirectories: ['node_modules', SRC],
-    extensions: ['', '.js', '.jsx', '.scss']
+    modules: ['node_modules', SRC],
+    extensions: ['.js', '.jsx', '.scss']
   },
   module: {
     loaders: [
@@ -36,31 +57,11 @@ module.exports = {
       {
         test: /\.scss$/,
         include: [/src/],
-        loader: ExtractTextPlugin.extract('style', [
-          'css?sourceMap',
-          'postcss',
-          'sass?sourceMap&outputStyle=expanded'])
+        loader: ExtractTextPlugin.extract({
+          fallbackLoader: 'style-loader',
+          loader: ['css', 'postcss', 'sass']
+        })
       }
     ]
-  },
-  postcss: [
-    cssnano({
-      autoprefixer: {
-        browsers: [
-          'safari 9',
-          'ie 10-11',
-          'last 2 Chrome versions',
-          'last 2 Firefox versions',
-          'edge 13',
-          'ios_saf 9.0-9.2',
-          'ie_mob 11',
-          'Android >= 4'
-        ],
-        cascade: false,
-        add: true,
-        remove: true
-      },
-      safe: true
-    })
-  ]
+  }
 };
