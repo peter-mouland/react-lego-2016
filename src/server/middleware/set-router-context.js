@@ -1,27 +1,28 @@
 import React from 'react';
 import { renderToString } from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
-import * as routes from '../../app/routes';
+import { ServerRouter, createServerRenderContext } from 'react-router';
+import { makeRoutes } from '../../app/routes';
+
+const createMarkup = (req, context) => renderToString(
+  <ServerRouter location={req.url} context={context} >
+    {makeRoutes()}
+  </ServerRouter>
+);
 
 function setRouterContext() {
   return function* genSetRouterContext(next) {
-    match({
-      routes: routes.makeRoutes(),
-      location: this.request.url
-    }, (error, redirect, renderProps) => {
-      if (error) {
-        this.status = 500;
-        throw error;
-      } else if (redirect) {
-        this.status = 302;
-        this.redirect(redirect.pathname + redirect.search);
-      } else {
-        // path * will return a 404
-        const isNotFound = renderProps.routes.find((route) => route.path === '*');
-        this.status = isNotFound ? 404 : 200;
-        this.routerContext = renderToString(<RouterContext {...renderProps} />);
-      }
-    });
+    const context = createServerRenderContext();
+    const markup = createMarkup(this.request, context);
+    const result = context.getResult();
+    if (result.redirect) {
+      this.status = 301;
+      this.redirect(result.redirect.pathname + result.redirect.search);
+    } else {
+      this.status = result.missed ? 404 : 200;
+      this.routerContext = (result.missed)
+        ? createMarkup(this.request, context)
+        : markup;
+    }
     yield next;
   };
 }
