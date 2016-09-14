@@ -1,5 +1,6 @@
 import React from 'react';
-import { Route, IndexRoute, Link } from 'react-router';
+import { Match, Link, Miss } from 'react-router';
+import DocumentMeta from 'react-document-meta';
 import debug from 'debug';
 
 import MainLayout from './Layouts/MainLayout';
@@ -13,36 +14,46 @@ const siteTitle = 'React Lego';
 
 export const routes = {
   homepage: {
-    path: '/',
+    exactly: true,
+    pattern: '/',
     label: 'About React Lego',
     title: `${siteTitle} - About React Lego`,
     component: Homepage
   },
   game: {
-    path: '/game/',
+    pattern: '/game/',
     label: 'Star Wars Trivia',
     title: `${siteTitle} - Star Wars Trivia`,
     component: Game
   }
 };
 
-const indexRoute = (route) => Object.assign({}, route, { path: null });
-
 export const LinkHelper = ({ to, ...props }) => {
   if (!routes[to]) throw new Error(`Route to '${to}' not found`);
   return (
-    <Link to={ routes[to].path } { ...props }>
+    <Link to={ routes[to].pattern } { ...props }>
       { props.children || routes[to].label }
     </Link>
   );
 };
 
+const passPropsToRoute = ({ route, props }) => (
+  <span>
+    <DocumentMeta title={ route.title } />
+    <route.component {...props} routes={route.routes}/>
+  </span>
+);
+
+const matchWithSubRoutes = (key, i) => {
+  const route = routes[key];
+  return (<Match { ...route } key={ i } render={(props) => passPropsToRoute({ route, props })} />);
+};
+
 export function makeRoutes() {
   return (
-    <Route path="/" component={ MainLayout }>
-      <IndexRoute { ...indexRoute(routes.homepage) } />
-      <Route { ...routes.game } />
-      <Route path="*" title ={`${siteTitle} - Page Not Found`} component={ NotFound} />
-    </Route>
+    <MainLayout>
+      {Object.keys(routes).map(matchWithSubRoutes)}
+      <Miss title={`${siteTitle} - Page Not Found`} component={ NotFound } />
+    </MainLayout>
   );
 }

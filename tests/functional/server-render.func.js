@@ -1,4 +1,4 @@
-import { Route } from 'react-router';
+import { MemoryRouter, Match, Miss } from 'react-router';
 import { sinon, React } from '../support/test.helper';
 import supertest from 'supertest';
 import * as routes from '../../src/app/routes';
@@ -13,14 +13,14 @@ const BrokenClientRoute = () => {
   throw new Error('new error!');
 };
 const ReactRoutes = (
-  <Route path="/" component={AppRoute}>
-    <Route path="tests" component={TestRoute} />
-    <Route path="another" component={AnotherRoute} />
-    <Route path="broken-client-route" component={BrokenClientRoute} />
-    <Route path="redirect" component={RedirectRoute}
+  <AppRoute >
+    <Match pattern="tests" component={TestRoute} />
+    <Match pattern="another" component={AnotherRoute} />
+    <Match pattern="broken-client-route" component={BrokenClientRoute} />
+    <Match pattern="redirect" component={RedirectRoute}
       onEnter={(_, redirect) => redirect('/tests/')} />
-    <Route path="*" component={NotFound} />
-  </Route>
+    <Miss component={NotFound} />
+  </AppRoute>
 );
 
 describe('Server', function () {
