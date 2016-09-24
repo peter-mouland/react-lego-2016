@@ -3,6 +3,13 @@ require('babel-core/register')({
 });
 require("babel-polyfill");
 const jsdom = require('jsdom');
+const hook = require('css-modules-require-hook');
+
+require('../../src/config/environment');
+const cssModulesConfig = require('../../src/config/css-modules.conf.js');
+
+hook(cssModulesConfig);
+
 // setup the simplest document possible
 const doc = jsdom.jsdom(`
 <!doctype html>

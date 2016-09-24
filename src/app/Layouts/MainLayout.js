@@ -4,6 +4,8 @@ import DocumentMeta from 'react-document-meta';
 import { findRoute } from '../utils';
 import { routes, LinkHelper } from '../routes';
 
+import styles from './mainLayout.scss';
+
 export default class MainLayout extends Component {
 
   static propTypes = {
@@ -15,22 +17,21 @@ export default class MainLayout extends Component {
     const cfg = findRoute(location.pathname);
     const route = cfg || routes.homepage;
     const navLinkProps = {
-      className: 'layout__nav-link',
-      activeClassName: 'layout__nav-link--selected'
+      className: styles.link
     };
 
     return (
-      <div className="layout layout--main">
+      <div className={styles.container}>
         <DocumentMeta title={ route.title } />
-        <nav className="layout__nav">
-          <span className="layout__nav-header">React Lego</span>
+        <nav className={styles.nav}>
+          <span className={styles.header}>React Lego</span>
           <LinkHelper to='homepage' { ...navLinkProps } />
           <LinkHelper to="game" { ...navLinkProps } />
         </nav>
-        <div className="layout__content">
+        <div className={styles.content}>
           {children}
         </div>
-        <footer className="layout__footer">
+        <footer className={styles.footer}>
           Hosted at <a href="http://github.com/peter-mouland/react-lego">github.com/peter-mouland/react-lego</a>
         </footer>
       </div>

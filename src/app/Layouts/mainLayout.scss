@@ -1,5 +1,5 @@
-@import '../utils/colours';
-@import '../utils/mixins';
+@import '../../styles/utils/colours';
+@import '../../styles/utils/mixins';
 
 $nav-height: 2em;
 $footer-height: 2em;
@@ -7,22 +7,22 @@ $content-height: calc(100vh - #{$nav-height + $footer-height});
 $col1-width: 33% !default;
 $col2-width: 66% !default;
 
-.layout {
+.container {
   width: 100%;
 }
 
-.layout__nav {
+.nav {
   padding: 0 2.25%;
   height: $nav-height;
 }
 
-.layout__nav-header {
+.header {
   margin-right: 10px;
   border-right: 6px double currentColor;
   padding-right: 10px;
 }
 
-.layout__nav-link {
+.link {
   margin: 0 6px;
   line-height: 2em;
 
@@ -35,7 +35,7 @@ $col2-width: 66% !default;
   }
 }
 
-.layout__content {
+.content {
   min-height: $content-height;
   padding: 0 2.25%;
 
@@ -47,7 +47,7 @@ $col2-width: 66% !default;
   }
 }
 
-.layout__footer {
+.footer {
   padding: 0 2.25%;
   height: $footer-height;
   line-height: 2em;

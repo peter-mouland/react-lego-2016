@@ -8,6 +8,10 @@ require('babel-core/register')({
   only: [/src/, /tests/, /config/]
 });
 require("babel-polyfill");
+const hook = require('css-modules-require-hook');
+const cssModulesConfig = require('../../src/config/css-modules.conf.js');
+
+hook(cssModulesConfig);
 
 const testServer = require('../../src/server/server.js');
 let openServer;

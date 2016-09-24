@@ -1,12 +1,14 @@
 import React from 'react';
 
+import styles from './question.scss';
+
 const QuestionOption = ({ onClick, attempt, children, answer, showAnswer }) => {
-  const classNames = ['question__option'];
+  const classNames = [styles.option];
   if (attempt === children) {
-    classNames.push('question__option--selected');
+    classNames.push(styles.optionSelected);
   }
   if (showAnswer) {
-    classNames.push(answer === children ? 'question__option--correct' : 'question__option--wrong');
+    classNames.push(answer === children ? styles.optionCorrect : styles.optionWrong);
   }
   return <li className={classNames.join(' ')} onClick={onClick} >{children}</li>;
 };
@@ -23,7 +25,7 @@ export default class Question extends React.Component {
     return (
       <section className="question" { ...props }>
         <p>{children}</p>
-        <ul className="question__options">
+        <ul className={styles.options}>
           {options.map((option, i) => (
             <QuestionOption {...optionProps} onClick={() => onClick(option)} key={i}>
               {option}

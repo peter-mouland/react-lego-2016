@@ -1,4 +1,5 @@
 import { routes } from '../../src/app/routes';
+import styles from '../../src/app/Layouts/mainLayout.scss';
 
 module.exports = {
   '@tags': ['smoke'],
@@ -10,10 +11,10 @@ module.exports = {
   },
 
   ['homepage layout should include nav, footer and content blocks'](browser) {
-    browser.expect.element('.layout.layout--main').to.be.present;
-    browser.expect.element('.layout__nav').to.be.present;
-    browser.expect.element('.layout__content').to.be.present;
-    browser.expect.element('.layout__footer').to.be.present;
+    browser.expect.element(`.${styles.container}`).to.be.present;
+    browser.expect.element(`.${styles.nav}`).to.be.present;
+    browser.expect.element(`.${styles.content}`).to.be.present;
+    browser.expect.element(`.${styles.footer}`).to.be.present;
   },
 
   ['homepage can navigate to the game page'](browser) {

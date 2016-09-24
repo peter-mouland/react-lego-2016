@@ -1,6 +1,7 @@
 import { React, mount, expect } from '../../support/test.helper';
 import Root, { history } from '../../../src/app/Root';
 import { routes } from '../../../src/app/routes';
+import styles from '../../../src/app/Layouts/mainLayout.scss';
 
 describe('Homepage Route', function () {
 
@@ -19,10 +20,10 @@ describe('Homepage Route', function () {
     });
 
     it(`should contain the 'main' layout`, () => {
-      expect(this.wrapper.find('.layout.layout--main')).to.be.present();
-      expect(this.wrapper.find('.layout__nav')).to.be.present();
-      expect(this.wrapper.find('.layout__content')).to.be.present();
-      expect(this.wrapper.find('.layout__footer')).to.be.present();
+      expect(this.wrapper.find(`.${styles.container}`)).to.be.present();
+      expect(this.wrapper.find(`.${styles.nav}`)).to.be.present();
+      expect(this.wrapper.find(`.${styles.content}`)).to.be.present();
+      expect(this.wrapper.find(`.${styles.footer}`)).to.be.present();
     });
 
     it('Should contain a title', () => {

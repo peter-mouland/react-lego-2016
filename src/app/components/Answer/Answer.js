@@ -1,8 +1,10 @@
 import React from 'react';
 
+import styles from './answer.scss';
+
 const CardItemValue = ({ value }) => {
   const values = [].concat(value);
-  const props = { className: 'card-item-value' };
+  const props = { className: styles.itemValue };
   return (
     <div >{
       values
@@ -17,11 +19,11 @@ const CardItemValue = ({ value }) => {
 };
 
 const AnswerOption = ({ answer, card }) => (
-  <dl className={`answer-option ${answer ? 'answer-option--answer' : ''}`}>
+  <dl className={`${styles.option} ${answer ? styles.optionAnswer : ''}`}>
     {Object.keys(card).map((info) => (
-      <span className="answer-option__item" key={info}>
-        <dt className="answer-option__title">{info}</dt>
-        <dd className="answer-option__value"><CardItemValue value={ card[info] }/></dd>
+      <span className={styles.item} key={info}>
+        <dt className={styles.title}>{info}</dt>
+        <dd className={styles.value}><CardItemValue value={ card[info] }/></dd>
       </span>
     ))}
   </dl>
@@ -29,7 +31,7 @@ const AnswerOption = ({ answer, card }) => (
 
 export default ({ cards, answerCard, showAnswer, ...props }) => (
   !cards.length ? null : (
-    <section className={`answer ${showAnswer ? 'visible' : 'hidden'}`} { ...props }>
+    <section className={`${showAnswer ? 'visible' : 'hidden'}`} { ...props }>
       <AnswerOption answer={answerCard === cards[0]} card={cards[0]}/>
       <AnswerOption answer={answerCard === cards[1]} card={cards[1]}/>
     </section>

@@ -37,7 +37,7 @@ module.exports = {
         test: /\.scss$/,
         include: [/src/],
         loader: ExtractTextPlugin.extract('style', [
-          'css?sourceMap',
+          'css?modules&importLoaders=1&sourceMap&localIdentName=[path]___[name]__[local]___[hash:base64:5]',
           'postcss',
           'sass?sourceMap&outputStyle=expanded'])
       }
