@@ -1,14 +1,17 @@
 import React from 'react';
 
+import * as styles from './question.css';
+import merge from '../../../styles/utils/merge';
+
+
 const QuestionOption = ({ onClick, attempt, children, answer, showAnswer }) => {
-  const classNames = ['question__option'];
-  if (attempt === children) {
-    classNames.push('question__option--selected');
-  }
-  if (showAnswer) {
-    classNames.push(answer === children ? 'question__option--correct' : 'question__option--wrong');
-  }
-  return <li className={classNames.join(' ')} onClick={onClick} >{children}</li>;
+  const style = merge(
+    styles.option,
+    attempt === children && styles.optionSelected,
+    showAnswer && answer === children && styles.optionCorrect,
+    showAnswer && answer !== children && styles.optionWrong,
+  );
+  return <li style={style} onClick={onClick} >{children}</li>;
 };
 
 export default class Question extends React.Component {
@@ -21,9 +24,9 @@ export default class Question extends React.Component {
     const optionProps = { answer, attempt, showAnswer };
 
     return (
-      <section className="question" { ...props }>
+      <section { ...props }>
         <p>{children}</p>
-        <ul className="question__options">
+        <ul style={styles.options}>
           {options.map((option, i) => (
             <QuestionOption {...optionProps} onClick={() => onClick(option)} key={i}>
               {option}
