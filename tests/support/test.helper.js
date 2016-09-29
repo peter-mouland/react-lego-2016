@@ -1,4 +1,4 @@
-import React from 'react';
+import preact, { h } from 'preact';
 import chai from 'chai';
 import sinon from 'sinon';
 import { shallow, mount, render } from 'enzyme';
@@ -13,7 +13,8 @@ chai.expect();
 chai.use(chaiEnzyme());
 
 export {
-  React,
+  preact,
+  h,
   expect,
   sinon,
   shallow,

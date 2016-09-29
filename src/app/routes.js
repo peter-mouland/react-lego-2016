@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route, IndexRoute, Link } from 'react-router';
+import Preact, { h } from 'preact';
+import { Router  } from 'preact-router';
 import debug from 'debug';
 
 import MainLayout from './Layouts/MainLayout';
@@ -16,33 +16,31 @@ export const routes = {
     path: '/',
     label: 'About React Lego',
     title: `${siteTitle} - About React Lego`,
-    component: Homepage
   },
   game: {
     path: '/game/',
     label: 'Star Wars Trivia',
     title: `${siteTitle} - Star Wars Trivia`,
-    component: Game
   }
 };
-
-const indexRoute = (route) => Object.assign({}, route, { path: null });
 
 export const LinkHelper = ({ to, ...props }) => {
   if (!routes[to]) throw new Error(`Route to '${to}' not found`);
   return (
-    <Link to={ routes[to].path } { ...props }>
+    <a href={ routes[to].path } { ...props }>
       { props.children || routes[to].label }
-    </Link>
+    </a>
   );
 };
 
 export function makeRoutes() {
   return (
-    <Route path="/" component={ MainLayout }>
-      <IndexRoute { ...indexRoute(routes.homepage) } />
-      <Route { ...routes.game } />
-      <Route path="*" title ={`${siteTitle} - Page Not Found`} component={ NotFound} />
-    </Route>
+    <MainLayout >
+      <Router>
+        <Homepage { ...routes.homepage } />
+        <Game { ...routes.game } />
+        <NotFound default title ={`${siteTitle} - Page Not Found`} />
+      </Router>
+    </MainLayout>
   );
 }

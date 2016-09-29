@@ -1,9 +1,9 @@
-import React from 'react';
+import Preact, { h } from 'preact';
 import debug from 'debug';
 
 debug('lego:Homepage.jsx');
 
-export default class Homepage extends React.Component {
+export default class Homepage extends Preact.Component {
 
   render() {
     return (

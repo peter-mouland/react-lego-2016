@@ -1,4 +1,4 @@
-import React from 'react';
+import Preact, { h } from 'preact';
 import debug from 'debug';
 
 import { randomRange } from '../../utils';
@@ -13,7 +13,7 @@ const DECK = 87;
 const Error = () => <p>Error Loading cards!</p>;
 const Dealing = () => <p>Loading cards....</p>;
 
-export default class Game extends React.Component {
+export default class Game extends Preact.Component {
 
   constructor(props) {
     super(props);
@@ -81,11 +81,9 @@ export default class Game extends React.Component {
     this.setState({ showAnswer: true });
   }
 
-  render() {
-    const {
-      cards, dealing, error, showAnswer, attempt, QandA: { answerCard, question, answer } = {},
-    } = this.state;
-
+  render({},{
+    cards, dealing, error, showAnswer, attempt, QandA: { answerCard, question, answer } = {},
+  }) {
     return (
       <div id="game">
         <banner className="header">

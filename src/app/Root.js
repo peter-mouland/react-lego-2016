@@ -1,17 +1,14 @@
-import React from 'react';
-import { Router, hashHistory, createMemoryHistory } from 'react-router';
+import Preact, { h } from 'preact';
 import debug from 'debug';
 
 import { makeRoutes } from './routes';
-import { isBrowser } from './utils';
 
 debug('lego:Root');
 
-// exported to be used in tests
-export const history = isBrowser ? hashHistory : createMemoryHistory();
-
-export default class Root extends React.Component {
-  render() {
-    return <Router children={makeRoutes()} history={history} />;
+export default class Root extends Preact.Component {
+  render({}, {}) {
+    return <div  >
+      {makeRoutes()}
+    </div>;
   }
 }
