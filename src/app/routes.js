@@ -1,5 +1,6 @@
 import Preact, { h } from 'preact';
 import { Router  } from 'preact-router';
+import { createHashHistory } from 'history';
 import debug from 'debug';
 
 import MainLayout from './Layouts/MainLayout';
@@ -36,7 +37,7 @@ export const LinkHelper = ({ to, ...props }) => {
 export function makeRoutes() {
   return (
     <MainLayout >
-      <Router>
+      <Router history={createHashHistory()}>
         <Homepage { ...routes.homepage } />
         <Game { ...routes.game } />
         <NotFound default title ={`${siteTitle} - Page Not Found`} />
