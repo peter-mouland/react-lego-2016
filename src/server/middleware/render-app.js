@@ -1,18 +1,19 @@
 import React from 'react';
 import Html from '../templates/Html';
 
-export default function renderAppWrapper(assets) {
-  return function renderApp(req, res) {
+export default function renderApp(assets) {
+  return function* genRenderApp(next) {
+    yield next;
     try {
-      res.send(res.renderPageToString(
+      this.body = this.renderPageToString(
         <Html
           scripts={assets.javascript}
           stylesheets={assets.styles}
-          content={res.routerContext}
+          content={this.routerContext}
         />
-      ));
+      );
     } catch (error) {
-      res.render500(error);
+      this.body = this.render500(error);
     }
   };
 }

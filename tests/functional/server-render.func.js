@@ -38,28 +38,28 @@ describe('Server', function () {
   });
 
   it('should render NotFound with 404 status when not found', (done) => {
-    supertest(server)
+    supertest(server.callback())
       .get('/route-that-doesnt-exist/')
       .expect(404, /Not found/)
       .end(done);
   });
 
   it('should render the ErrorPage when a server route throws', (done) => {
-    supertest(server)
+    supertest(server.callback())
       .get('/broken-client-route/')
       .expect(500, /Man down!/)
       .end(done);
   });
 
   it('should render the ErrorPage when a react route throws', (done) => {
-    supertest(server)
+    supertest(server.callback())
       .get('/broken-client-route/')
       .expect(500, /Man down!/)
       .end(done);
   });
 
   it('Should render a html page', (done) => {
-    supertest(server)
+    supertest(server.callback())
       .get('/')
       .expect(200)
       .expect('Content-Type', 'text/html; charset=utf-8')
@@ -70,8 +70,8 @@ describe('Server', function () {
       .end(done);
   });
 
-  it('Should gzip static assets', (done) => {
-    return supertest(server)
+  it('Should gzip koaStatic assets', (done) => {
+    return supertest(server.callback())
       .get('/app.js')
       .expect(200)
       .expect('Content-Encoding', 'gzip')
@@ -79,7 +79,7 @@ describe('Server', function () {
   });
 
   it('should render react routes from `makeRoutes()`', (done) => {
-    supertest(server)
+    supertest(server.callback())
       .get('/tests/')
       .expect(200)
       // can't test complete match because of generated data-reactids
@@ -89,7 +89,7 @@ describe('Server', function () {
   });
 
   it('should support react route redirects', (done) => {
-    supertest(server)
+    supertest(server.callback())
       .get('/redirect/')
       .expect(302)
       .expect('location', '/tests/')

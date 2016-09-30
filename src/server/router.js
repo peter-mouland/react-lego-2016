@@ -1,6 +1,6 @@
-import express from 'express';
+import Router from 'koa-router';
+import koaStatic from 'koa-static';
 import debug from 'debug';
-import slashes from 'connect-slashes';
 
 import setRouterContext from './middleware/set-router-context';
 import renderApp from './middleware/render-app';
@@ -8,23 +8,23 @@ import apiRouter from './api';
 import { DIST, PUBLIC } from '../config/paths';
 
 const log = debug('lego:router');
-const oneDay = 1000 * 60 * 60 * 24;
+// const oneDay = 1000 * 60 * 60 * 24;
+export const router = new Router();
 
-export const routingApp = express();
+const publicFiles = koaStatic(PUBLIC);
+publicFiles._name = 'koaStatic /public'; // eslint-disable-line no-underscore-dangle
 
-routingApp.on('mount', (parent) => {
-  parent.use((err, req, res, next) => (
-    (err) ? res.render500(err) : next()
-  ));
-});
+const distFiles = koaStatic(DIST);
+distFiles._name = 'koaStatic /dist'; // eslint-disable-line no-underscore-dangle
 
 export function setRoutes(assets) {
   log('adding react routes');
 
-  routingApp
-    .use('/', express.static(DIST, { maxAge: oneDay }))
-    .use('/', express.static(PUBLIC, { maxAge: oneDay }))
-    .use('/api', apiRouter)
-    .use(slashes())
-    .get('*', setRouterContext, renderApp(assets));
+  router
+    .use(publicFiles)
+    .use(distFiles)
+    .use(apiRouter.routes())
+    .use(apiRouter.allowedMethods())
+    .use(setRouterContext())
+    .get('/(.*)', renderApp(assets));
 }
