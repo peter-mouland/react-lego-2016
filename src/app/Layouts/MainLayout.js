@@ -1,10 +1,10 @@
-import Preact, { h, Component } from 'preact';
+import { h, Component } from 'preact';
 
 import { LinkHelper } from '../routes';
 
 export default class MainLayout extends Component {
 
-  render({ children, location }, {}) {
+  render({ children }) {
     const navLinkProps = {
       className: 'layout__nav-link',
       activeClassName: 'layout__nav-link--selected'

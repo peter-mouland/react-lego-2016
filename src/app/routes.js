@@ -1,5 +1,5 @@
-import Preact, { h } from 'preact';
-import { Router  } from 'preact-router';
+import { h } from 'preact';
+import { Router } from 'preact-router';
 import { createHashHistory } from 'history';
 import debug from 'debug';
 

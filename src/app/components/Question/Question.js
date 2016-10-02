@@ -14,7 +14,7 @@ const QuestionOption = ({ onClick, attempt, answer, showAnswer, children }) => {
 
 export default class Question extends Preact.Component {
 
-  render({ children, showAnswer, answer, cards, attempt, onClick, ...props }, {}) {
+  render({ children, showAnswer, answer, cards, attempt, onClick, ...props }) {
     if (!cards.length) return null;
 
     const options = [cards[0].name, cards[1].name, 'both', 'unknown'];
@@ -23,7 +23,7 @@ export default class Question extends Preact.Component {
       <section className="question" { ...props }>
         <p>{children}</p>
         <ul className="question__options">
-          {options.map((option, i) => (
+          {options.map((option) => (
             <QuestionOption {...optionProps} onClick={() => onClick(option)}>
               {option}
             </QuestionOption>

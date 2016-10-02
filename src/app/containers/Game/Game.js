@@ -81,7 +81,7 @@ export default class Game extends Preact.Component {
     this.setState({ showAnswer: true });
   }
 
-  render({},{
+  render({ ...props }, {
     cards, dealing, error, showAnswer, attempt, QandA: { answerCard, question, answer } = {},
   }) {
     return (
