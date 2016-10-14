@@ -1,7 +1,7 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import webpack from 'webpack';
-import express from 'express';
-import webpackMiddleware from 'webpack-dev-middleware';
+import Router from 'koa-router';
+import webpackMiddleware from 'koa-webpack-dev-middleware';
 import debug from 'debug';
 
 import webpackConfig from '../../config/webpack.config.dev';
@@ -13,7 +13,7 @@ const log = {
 
 const compiler = webpack(webpackConfig);
 
-const hotRouter = new express.Router();
+const hotRouter = new Router();
 
 hotRouter.use(webpackMiddleware(compiler, {
   noInfo: true,
@@ -24,7 +24,7 @@ hotRouter.use(webpackMiddleware(compiler, {
   }
 }));
 
-hotRouter.use(require('webpack-hot-middleware')(compiler, {
+hotRouter.use(require('koa-webpack-hot-middleware')(compiler, {
   log: log.pack,
   path: '/__webpack_hmr',
   heartbeat: 10 * 1000

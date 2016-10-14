@@ -19,7 +19,7 @@ distFiles._name = 'koaStatic /dist'; // eslint-disable-line no-underscore-dangle
 
 function getStaticAssets() {
   return (process.env.NODE_ENV === 'development')
-    ? require('./middleware/hot-reload') // eslint-disable-line
+    ? require('./middleware/hot-reload').routes() // eslint-disable-line
     : distFiles;
 }
 
@@ -28,8 +28,7 @@ export function setRoutes(assets) {
 
   router
     .use(publicFiles)
-    // .use(getStaticAssets())
-    .use(distFiles)
+    .use(getStaticAssets())
     .use(apiRouter.routes())
     .use(apiRouter.allowedMethods())
     .use(setRouterContext())
