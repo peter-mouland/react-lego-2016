@@ -13,9 +13,20 @@ const middleware = [
 ];
 
 export default function configureStore(initialState) {
-  return createStore(
+  const store = createStore(
     reducers,
     initialState,
     applyMiddleware(...middleware)
   );
+
+  if (module.hot) {
+    // Enable Webpack hot module replacement for reducers
+    module.hot.accept('../reducers', () => {
+      const nextRootReducer = require('../reducers'); // eslint-disable-line global-require
+
+      store.replaceReducer(nextRootReducer);
+    });
+  }
+
+  return store;
 }

@@ -18,7 +18,7 @@ function setRouterContext() {
   return function* genSetRouterContext(next) {
     const store = configureStore();
     const context = createServerRenderContext();
-    const markup = createMarkup(this.request, context);
+    const markup = createMarkup(this.request, context, store);
     const result = context.getResult();
     if (result.redirect) {
       this.status = 301;
