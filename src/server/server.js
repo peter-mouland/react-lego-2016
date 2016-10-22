@@ -1,46 +1,33 @@
-/* eslint-disable no-console,import/no-extraneous-dependencies */
+import koa from 'koa';
+import debug from 'debug';
+import compress from 'koa-compress';
 
-const webpack = require('webpack');
-const WebpackDevServer = require('webpack-dev-server');
-const express = require('express');
-const path = require('path');
-const httpProxy = require('http-proxy');
+import handleError from './middleware/handle-error';
+import logger from './middleware/logger';
+import responseTime from './middleware/response-time';
+import pageRenderers from './middleware/page-renderers';
+import headers from './middleware/headers';
+import webpackConfig from '../config/webpack.config.prod';
+import { router, setRoutes } from './router';
 
-require('../config/environment');
-const webpackConfig = require('../config/webpack.config.dev.js');
+const server = koa();
+const log = debug('lego:server.js');
+log('starting');
 
-const proxy = httpProxy.createProxyServer();
-const app = express();
-let bundleStart = null;
-const compiler = webpack(webpackConfig);
-compiler.plugin('compile', () => {
-  console.log('Bundling...');
-  bundleStart = Date.now();
-});
-compiler.plugin('done', () => {
-  console.log(`Bundled in ${Date.now() - bundleStart}ms!`);
-});
+const webpackEntries = Object.keys(webpackConfig.entry);
+const assets = {
+  javascript: webpackEntries.map((entry) => `/${entry}.js`),
+  styles: webpackEntries.map((entry) => `/${entry}.css`)
+};
 
-const bundler = new WebpackDevServer(compiler, {
-  publicPath: '/dist/',
-  hot: true,
-  quiet: false,
-  noInfo: true,
-  stats: {
-    colors: true
-  }
-});
+server.use(handleError('render500'));
+server.use(responseTime());
+server.use(compress({ threshold: 2048 }));
+server.use(logger());
+server.use(headers());
+server.use(pageRenderers());
 
-app.use(express.static(path.resolve(__dirname, 'dist')));
+setRoutes(assets);
+server.use(router.routes());
 
-app.all('/dist/*', (req, res) => {
-  proxy.web(req, res, {
-    target: 'http://localhost:8080'
-  });
-});
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'views/index.html'));
-});
-
-module.exports = { app, bundler, compiler };
+export default server;
