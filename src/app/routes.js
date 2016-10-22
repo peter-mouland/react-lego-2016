@@ -29,7 +29,7 @@ export const LinkHelper = ({ to, ...props }) => {
   if (!routes[to]) throw new Error(`Route to '${to}' not found`);
   return (
     <a href={ routes[to].path } { ...props }>
-      { props.children || routes[to].label }
+      { props.children.length > 0 ? props.children : routes[to].label }
     </a>
   );
 };
