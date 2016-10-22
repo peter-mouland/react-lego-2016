@@ -1,4 +1,4 @@
-import { Route } from 'react-router';
+import { Match, Miss, Redirect } from 'react-router';
 import { sinon, React } from '../support/test.helper';
 import supertest from 'supertest';
 import * as routes from '../../src/app/routes';
@@ -7,20 +7,20 @@ import server from '../../src/server/server';
 const AppRoute = ({ children }) => <div><h2>App</h2>{children}</div>;
 const TestRoute = () => <div>Test Route</div>;
 const AnotherRoute = () => <div>Another Route</div>;
-const RedirectRoute = () => <div>Never resolved</div>;
+const RedirectRoute = (props) => <Redirect to={{ pathname: '/tests/', state: { from: props.location } }} />;
 const NotFound = () => <div>Not found!</div>;
 const BrokenClientRoute = () => {
   throw new Error('new error!');
 };
 const ReactRoutes = (
-  <Route path="/" component={AppRoute}>
-    <Route path="tests" component={TestRoute} />
-    <Route path="another" component={AnotherRoute} />
-    <Route path="broken-client-route" component={BrokenClientRoute} />
-    <Route path="redirect" component={RedirectRoute}
-      onEnter={(_, redirect) => redirect('/tests/')} />
-    <Route path="*" component={NotFound} />
-  </Route>
+  <AppRoute >
+    <Match pattern="/" exactly component={AppRoute} />
+    <Match pattern="/tests/" component={TestRoute} />
+    <Match pattern="/another/" component={AnotherRoute} />
+    <Match pattern="/broken-client-route/" component={BrokenClientRoute} />
+    <Match pattern="/redirect/" render={RedirectRoute} />
+    <Miss component={NotFound} />
+  </AppRoute>
 );
 
 describe('Server', function () {
@@ -91,7 +91,7 @@ describe('Server', function () {
   it('should support react route redirects', (done) => {
     supertest(server)
       .get('/redirect/')
-      .expect(302)
+      .expect(301)
       .expect('location', '/tests/')
       .end(done);
   });

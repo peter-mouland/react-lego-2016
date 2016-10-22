@@ -64,7 +64,7 @@
     "react": "^15.1.0",
     "react-document-meta": "^2.0.2",
     "react-dom": "^15.1.0",
-    "react-router": "^2.4.0",
+    "react-router": "^4.0.0-5",
     "sass-loader": "^4.0.2",
     "style-loader": "^0.13.0",
     "webpack": "^1.13.1",
