@@ -5,8 +5,7 @@ import { routes } from '../../../src/app/routes';
 describe('Game Route', function () {
 
   before(() => {
-    this.wrapper = mount(<Root />);
-    history.push('/game/');
+    this.wrapper = mount(<Root location="/game/"/>);
   });
 
   after(() => {
