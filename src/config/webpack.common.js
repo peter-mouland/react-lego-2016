@@ -5,6 +5,7 @@ const { SRC, DIST } = require('./paths');
 
 module.exports = {
   devtool: 'source-map',
+  context: SRC,
   output: {
     path: DIST,
     filename: '[name].js',

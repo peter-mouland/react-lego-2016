@@ -8,8 +8,9 @@ require('babel-core/register')({
   only: [/src/, /tests/, /config/]
 });
 require("babel-polyfill");
-const HttpServer = require('http-server').HttpServer;
-let openServer = new HttpServer({ root: 'compiled'});
+
+const testServer = require('../../src/server/server.js');
+let openServer;
 
 module.exports = (function(settings) {
   var buildString = "";
@@ -23,8 +24,8 @@ module.exports = (function(settings) {
   settings.test_settings.default.globals = {
     TARGET_PATH : argv.target || `http://localhost:${process.env.PORT}`,
     before: function(done) {
-      openServer.listen(process.env.PORT, 'localhost', () => {
-        console.log(`Server running on port ${process.env.PORT}`);
+      openServer = testServer.listen(process.env.PORT, () => {
+        console.log(`listening at http://localhost:${process.env.PORT}`); // eslint-disable-line
         done()
       });
     },
