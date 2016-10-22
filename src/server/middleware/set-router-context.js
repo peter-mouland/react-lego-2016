@@ -7,6 +7,7 @@ import debug from 'debug';
 
 import configureStore from '../../app/store/configure-store';
 import { makeRoutes } from '../../app/routes';
+import fetchComponentData from '../lib/fetch-component-data';
 
 const setRouterContext = (req, res, next) => {
   const log = debug('lego:set-router-context');
@@ -26,15 +27,21 @@ const setRouterContext = (req, res, next) => {
     } else {
       // path * will return a 404
       const isNotFound = renderProps.routes.find((route) => route.path === '*');
-      const InitialComponent = (
-        <Provider store={store}>
-          <RouterContext {...renderProps} />
-        </Provider>
-      );
-      res.initialState = store.getState();
-      res.status(isNotFound ? 404 : 200);
-      res.routerContext = renderToString(InitialComponent);
-      next();
+      const setContext = () => {
+        const InitialComponent = (
+          <Provider store={store}>
+            <RouterContext {...renderProps} />
+          </Provider>
+        );
+        res.initialState = store.getState();
+        res.status(isNotFound ? 404 : 200);
+        res.routerContext = renderToString(InitialComponent); // eslint-disable-line
+        next();
+      };
+
+      fetchComponentData(store.dispatch, renderProps.components, renderProps.params)
+        .then(setContext)
+        .catch((err) => res.render500(err));
     }
   });
 };
