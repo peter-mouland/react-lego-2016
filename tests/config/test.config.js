@@ -3,6 +3,8 @@ require('babel-core/register')({
 });
 require("babel-polyfill");
 const jsdom = require('jsdom');
+const hook = require('node-hook').hook;
+hook('.svg', (source, filename) => 'console.log("' + filename + '");');
 // setup the simplest document possible
 const doc = jsdom.jsdom(`
 <!doctype html>

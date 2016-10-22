@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const cssnano = require('cssnano');
 const { SRC, DIST } = require('./paths');
+const isoTools = require('../server/isomorphic-tools');
 
 module.exports = {
   devtool: 'source-map',
@@ -11,6 +12,7 @@ module.exports = {
     publicPath: '/'
   },
   plugins: [
+    isoTools.plugin(),
     new ExtractTextPlugin('[name].css'),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
@@ -40,6 +42,11 @@ module.exports = {
           'css?sourceMap',
           'postcss',
           'sass?sourceMap&outputStyle=expanded'])
+      },
+      {
+        test: /\.svg$/,
+        include: [/src/],
+        loaders: ['svg-inline']
       }
     ]
   },

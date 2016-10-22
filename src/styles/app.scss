@@ -4,3 +4,10 @@
 
 @import "components/answer";
 @import "components/question";
+
+.icon--chevron {
+  height: 12px;
+  width: 12px;
+  stroke: currentColor;
+  transform: rotate(270deg);
+}
