@@ -11,7 +11,7 @@
     "build:dev": "webpack --config src/config/webpack.config.dev.js",
     "build:server": "NODE_ENV=production babel src -d compiled",
     "start": "NODE_ENV=production node compiled/server-entry.js",
-    "start:dev": "nodemon src/server-entry.js --exec babel-node",
+    "start:dev": "nodemon src/server-entry.js --ignore src/app --exec babel-node",
     "lint": "sass-lint -v -q -c ./sass-lint.yml && eslint 'src/**/*.js'",
     "test": "npm run test:unit && npm run test:func",
     "test:unit": "npm run mocha -- 'src/**/*.spec.js'",
@@ -92,9 +92,13 @@
     "pre-commit": "^1.1.2",
     "pre-push": "^0.1.1",
     "react-addons-test-utils": "^15.1.0",
+    "react-hot-loader": "^3.0.0-beta.5",
     "sass-lint": "^1.5.1",
     "selenium-standalone": "^5.6.4",
     "sinon": "^1.17.3",
-    "supertest": "^2.0.0"
+    "supertest": "^2.0.0",
+    "webpack-dev-middleware": "^1.6.1",
+    "webpack-dev-server": "^1.14.1",
+    "webpack-hot-middleware": "^2.10.0"
   }
 }
