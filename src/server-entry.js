@@ -1,5 +1,8 @@
 require('babel-polyfill');
+const hook = require('node-hook').hook;
 require('./config/environment');
+
+hook('.scss', () => '');
 const server = require('./server/server');
 
 server.listen(process.env.PORT, () => {

@@ -9,7 +9,6 @@ const devConfig = Object.assign({}, defaultConfig, {
     app: [
       'react-hot-loader/patch',
       'webpack-hot-middleware/client',
-      `${SRC}/styles/app.scss`,
       `${SRC}/client-entry.js`
     ]
   },

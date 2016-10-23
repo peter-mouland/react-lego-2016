@@ -1,5 +1,7 @@
 import React, { Component, PropTypes } from 'react';
+
 import { LinkHelper } from '../routes';
+import './mainLayout.scss';
 
 export default class MainLayout extends Component {
 
