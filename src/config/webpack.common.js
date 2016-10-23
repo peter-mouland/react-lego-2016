@@ -11,7 +11,7 @@ const isDevelopment = process.env.NODE_ENV === 'development';
 
 module.exports = {
   devtool: 'source-map',
-  context: process.cwd(),
+  context: SRC,
   output: {
     path: DIST,
     filename: '[name].js',

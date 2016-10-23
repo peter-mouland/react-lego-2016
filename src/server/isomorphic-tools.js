@@ -7,7 +7,7 @@ const isomorphicTools = new IsomorphicTools(isomorphicConfig);
 module.exports = {
   server() {
     return isomorphicTools
-      .server(paths.ROOT)
+      .server(process.env.NODE_ENV === 'production' ? paths.COMPILED : paths.SRC)
       .then(() => {
         const assets = isomorphicTools.assets();
         return {

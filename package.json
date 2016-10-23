@@ -9,7 +9,7 @@
     "pretest:e2e": "npm run build",
     "build": "NODE_ENV=production webpack --config src/config/webpack.config.prod.js -p",
     "build:dev": "webpack --config src/config/webpack.config.dev.js",
-    "build:server": "NODE_ENV=production babel src -d compiled",
+    "build:server": "NODE_ENV=production babel src -d compiled && cp -R src/assets compiled",
     "start": "NODE_ENV=production node compiled/server-entry.js",
     "start:dev": "nodemon src/server-entry.js --exec babel-node",
     "lint": "sass-lint -v -q -c ./sass-lint.yml && eslint 'src/**/*.js'",
