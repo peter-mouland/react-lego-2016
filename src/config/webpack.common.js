@@ -1,7 +1,13 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const cssnano = require('cssnano');
+const IsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
+
 const { SRC, DIST } = require('./paths');
+const isomorphicConfig = require('../config/iso-config.js');
+
+const isomorphicPlugin = new IsomorphicToolsPlugin(isomorphicConfig);
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 module.exports = {
   devtool: 'source-map',
@@ -12,6 +18,7 @@ module.exports = {
     publicPath: '/'
   },
   plugins: [
+    isomorphicPlugin.development(isDevelopment),
     new ExtractTextPlugin('[name].css'),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
@@ -62,6 +69,11 @@ module.exports = {
           fallbackLoader: 'style-loader',
           loader: ['css', 'postcss', 'sass']
         })
+      },
+      {
+        test: /\.svg$/,
+        include: [/src/],
+        loaders: ['svg-inline']
       }
     ]
   }
