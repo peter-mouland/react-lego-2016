@@ -17,12 +17,18 @@ publicFiles._name = 'koaStatic /public'; // eslint-disable-line no-underscore-da
 const distFiles = koaStatic(DIST);
 distFiles._name = 'koaStatic /dist'; // eslint-disable-line no-underscore-dangle
 
+function getStaticAssets() {
+  return (process.env.NODE_ENV === 'development')
+    ? require('./middleware/hot-reload').routes() // eslint-disable-line
+    : distFiles;
+}
+
 export function setRoutes(assets) {
   log('adding react routes');
 
   router
     .use(publicFiles)
-    .use(distFiles)
+    .use(getStaticAssets())
     .use(apiRouter.routes())
     .use(apiRouter.allowedMethods())
     .use(setRouterContext())
