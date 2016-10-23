@@ -5,8 +5,7 @@ import { routes } from '../../../src/app/routes';
 describe('Homepage Route', function () {
 
   before(() => {
-    this.wrapper = mount(<Root />);
-    history.push('/');
+    this.wrapper = mount(<Root location="/"/>);
   });
 
   after(() => {
