@@ -6,7 +6,7 @@ import getQuestionAndAnswer from './getQuestionAndAnswer';
 import Question from '../../components/Question/Question';
 import Answer from '../../components/Answer/Answer';
 import api from '../../api';
-import chevron from './assets/chevron.svg';
+import chevron from '../../../assets/chevron.svg';
 import Svg from '../../components/Svg/Svg';
 
 debug('lego:Game');

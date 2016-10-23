@@ -1,18 +1,24 @@
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const cssnano = require('cssnano');
+const IsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
+
 const { SRC, DIST } = require('./paths');
-const isoTools = require('../server/isomorphic-tools');
+const isomorphicConfig = require('../config/isoConfig.js');
+
+const isomorphicPlugin = new IsomorphicToolsPlugin(isomorphicConfig);
+const isDevelopment = process.env.NODE_ENV === 'development';
 
 module.exports = {
   devtool: 'source-map',
+  context: process.cwd(),
   output: {
     path: DIST,
     filename: '[name].js',
     publicPath: '/'
   },
   plugins: [
-    isoTools.plugin(),
+    isomorphicPlugin.development(isDevelopment),
     new ExtractTextPlugin('[name].css'),
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.NoErrorsPlugin(),
