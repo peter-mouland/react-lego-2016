@@ -2,9 +2,10 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { ServerRouter, createServerRenderContext } from 'react-router';
 import { Provider } from 'react-redux';
+import { matchRoutesToLocation } from 'react-router-addons-routes';
 
 import configureStore from '../../app/store/configure-store';
-import { makeRoutes } from '../../app/routes';
+import { makeRoutes, routes } from '../../app/routes';
 
 const createMarkup = (req, context, store) => renderToString(
   <Provider store={store}>
@@ -14,6 +15,14 @@ const createMarkup = (req, context, store) => renderToString(
   </Provider>
 );
 
+function getContext(req, catcher) {
+  const { matchedRoutes, params } = matchRoutesToLocation(routes, { pathname: req.url });
+  const promises = matchedRoutes.filter((route) => route.component.needs)
+    .map((route) => route.component.needs.map((need) => need(params)));
+  return Promise.all(promises).catch(catcher);
+}
+
+// todo: stop rendering 404 on server api :(
 function setRouterContext() {
   return function* genSetRouterContext(next) {
     const store = configureStore();
@@ -24,11 +33,14 @@ function setRouterContext() {
       this.status = 301;
       this.redirect(result.redirect.pathname + result.redirect.search);
     } else {
-      this.status = result.missed ? 404 : 200;
-      this.initialState = store.getState();
-      this.routerContext = (result.missed)
-        ? createMarkup(this.request, context, store)
-        : markup;
+      getContext(this.request, (err) => this.render500(err))
+        .then(() => {
+          this.status = result.missed ? 404 : 200;
+          this.initialState = store.getState();
+          this.routerContext = (result.missed)
+            ? createMarkup(this.request, context, store)
+            : markup;
+        });
     }
     yield next;
   };
