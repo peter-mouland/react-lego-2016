@@ -1,9 +1,10 @@
 import { routes } from '../../src/app/routes';
+const matchRoute =  (to) => routes.find((route) => route.name === to);
 
 module.exports = {
   '@tags': ['smoke'],
   before(browser) {
-    browser.pageLoaded(routes.homepage.path, 'body');
+    browser.pageLoaded(matchRoute('homepage').pattern, 'body');
   },
   after(browser) {
     browser.end();

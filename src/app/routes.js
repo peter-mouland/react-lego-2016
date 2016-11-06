@@ -1,5 +1,6 @@
 import React from 'react';
-import { Match, Link, Miss } from 'react-router';
+import { Miss, Match } from 'react-router';
+import { NamedLink, RoutesProvider, MatchWithRoutes } from 'react-router-addons-routes';
 import DocumentMeta from 'react-document-meta';
 import debug from 'debug';
 
@@ -12,48 +13,48 @@ debug('lego:routes');
 
 const siteTitle = 'React Lego';
 
-export const routes = {
-  homepage: {
+export const routes = [
+  {
+    name: 'homepage',
     exactly: true,
     pattern: '/',
     label: 'About React Lego',
     title: `${siteTitle} - About React Lego`,
     component: Homepage
   },
-  game: {
+  {
+    name: 'game',
     pattern: '/game/',
     label: 'Star Wars Trivia',
     title: `${siteTitle} - Star Wars Trivia`,
     component: Game
   }
-};
+];
 
 export const LinkHelper = ({ to, ...props }) => {
-  if (!routes[to]) throw new Error(`Route to '${to}' not found`);
+  const route = routes.find((rt) => rt.name === to);
+  if (!route) throw new Error(`Route to '${to}' not found`);
   return (
-    <Link to={ routes[to].pattern } { ...props }>
-      { props.children || routes[to].label }
-    </Link>
+    <NamedLink to={ to } { ...props }>
+      { props.children || route.label }
+    </NamedLink>
   );
 };
 
-const passPropsToRoute = ({ route, props }) => (
+const Route = ({ route }) => (
   <span>
-    <DocumentMeta title={ route.title } />
-    <route.component {...props} routes={route.routes}/>
+    <Match {...route} render={() => <DocumentMeta title={ route.title }/>}/>
+    <MatchWithRoutes {...route} />
   </span>
 );
 
-const matchWithSubRoutes = (key, i) => {
-  const route = routes[key];
-  return (<Match { ...route } key={ i } render={(props) => passPropsToRoute({ route, props })} />);
-};
-
 export function makeRoutes() {
   return (
-    <MainLayout>
-      {Object.keys(routes).map(matchWithSubRoutes)}
-      <Miss title={`${siteTitle} - Page Not Found`} component={ NotFound } />
-    </MainLayout>
+    <RoutesProvider routes={routes}>
+      <MainLayout>
+        {routes.map((route) => (<Route key={route.name} route={ route }/>))}
+        <Miss title={`${siteTitle} - Page Not Found`} component={ NotFound }/>
+      </MainLayout>
+    </RoutesProvider>
   );
 }
