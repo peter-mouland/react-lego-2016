@@ -15,14 +15,14 @@ const createMarkup = (req, context, store) => renderToString(
   </Provider>
 );
 
-function getContext(req, catcher) {
+// todo : get this dispatch/data-request to work :(
+async function getContext(dispatch, req) {
   const { matchedRoutes, params } = matchRoutesToLocation(routes, { pathname: req.url });
   const promises = matchedRoutes.filter((route) => route.component.needs)
-    .map((route) => route.component.needs.map((need) => need(params)));
-  return Promise.all(promises).catch(catcher);
+    .map((route) => route.component.needs.map((need) => dispatch(need(params))));
+  return Promise.all(promises);
 }
 
-// todo: stop rendering 404 on server api :(
 function setRouterContext() {
   return function* genSetRouterContext(next) {
     const store = configureStore();
@@ -33,16 +33,13 @@ function setRouterContext() {
       this.status = 301;
       this.redirect(result.redirect.pathname + result.redirect.search);
     } else {
-      getContext(this.request, (err) => this.render500(err))
-        .then(() => {
-          this.status = result.missed ? 404 : 200;
-          this.initialState = store.getState();
-          this.routerContext = (result.missed)
+      yield getContext(store.dispatch, this.request);
+      this.status = result.missed ? 404 : 200;
+      this.initialState = store.getState();
+      this.routerContext = (result.missed)
             ? createMarkup(this.request, context, store)
             : markup;
-        });
     }
-    yield next;
   };
 }
 

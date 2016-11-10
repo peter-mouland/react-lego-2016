@@ -6,6 +6,7 @@
     "transform-class-properties",
     "transform-object-rest-spread",
     "transform-object-assign",
+    "transform-async-to-generator",
     "react-hot-loader/babel"
   ]
 }

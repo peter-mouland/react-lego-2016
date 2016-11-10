@@ -28,6 +28,7 @@ export function setRoutes(assets) {
 
   router
     .use(publicFiles)
+    .use(distFiles)
     .use(getStaticAssets())
     .use(apiRouter.routes())
     .use(apiRouter.allowedMethods())
