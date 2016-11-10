@@ -33,13 +33,14 @@ function setRouterContext() {
       this.status = 301;
       this.redirect(result.redirect.pathname + result.redirect.search);
     } else {
-      yield getContext(store.dispatch, this.request);
+      getContext(store.dispatch, this.request);
       this.status = result.missed ? 404 : 200;
       this.initialState = store.getState();
       this.routerContext = (result.missed)
             ? createMarkup(this.request, context, store)
             : markup;
     }
+    yield next
   };
 }
 
