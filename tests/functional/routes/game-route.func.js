@@ -1,6 +1,6 @@
 import { React, mount, expect } from '../../support/test.helper';
 import Root, { history } from '../../../src/app/Root';
-import { routes } from '../../../src/app/routes';
+import { findRoute } from '../../../src/app/routes';
 
 describe('Game Route', function () {
 
@@ -25,7 +25,7 @@ describe('Game Route', function () {
     });
 
     it('Should contain a title', () => {
-      expect(document.title).to.equal(routes.game.title);
+      expect(document.title).to.equal(findRoute('game').title);
     });
 
     it('should have a nav', () => {

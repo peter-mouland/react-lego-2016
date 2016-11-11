@@ -1,9 +1,9 @@
-import { routes } from '../../src/app/routes';
+import { findRoute } from '../../src/app/routes';
 
 module.exports = {
   '@tags': ['smoke'],
   before(browser) {
-    browser.pageLoaded(routes.homepage.path, 'body');
+    browser.pageLoaded(findRoute('homepage').path, 'body');
   },
   after(browser) {
     browser.end();

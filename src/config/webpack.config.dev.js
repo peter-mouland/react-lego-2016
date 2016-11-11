@@ -8,7 +8,7 @@ const devConfig = Object.assign({}, defaultConfig, {
   entry: {
     app: [
       'react-hot-loader/patch',
-      'webpack-hot-middleware/client',
+      'webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000',
       `${SRC}/client-entry.js`
     ]
   },

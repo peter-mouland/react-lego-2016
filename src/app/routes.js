@@ -31,8 +31,10 @@ export const routes = [
   }
 ];
 
+export const findRoute = (to) => routes.find((rt) => rt.name === to);
+
 export const LinkHelper = ({ to, ...props }) => {
-  const route = routes.find((rt) => rt.name === to);
+  const route = findRoute(to);
   if (!route) throw new Error(`Route to '${to}' not found`);
   return (
     <NamedLink to={ to } { ...props }>

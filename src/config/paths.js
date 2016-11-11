@@ -12,4 +12,6 @@ const STYLES = path.join(SRC, 'styles');
 const TESTS = path.join(ROOT, 'tests');
 const ASSET_FILE = path.join(SERVER, 'webpack-assets.json');
 
-module.exports = { ROOT, SRC, DIST, COMPILED, APP, ICONS, PUBLIC, STYLES, TESTS, ASSET_FILE };
+module.exports = {
+  ROOT, SRC, DIST, SERVER, COMPILED, APP, ICONS, PUBLIC, STYLES, TESTS, ASSET_FILE
+};

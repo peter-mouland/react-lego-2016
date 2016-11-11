@@ -6,6 +6,7 @@ import handleError from './middleware/handle-error';
 import logger from './middleware/logger';
 import responseTime from './middleware/response-time';
 import pageRenderers from './middleware/page-renderers';
+import hotReload from './middleware/hot-reload';
 import headers from './middleware/headers';
 import { router, setRoutes } from './router';
 
@@ -19,6 +20,12 @@ server.use(compress({ threshold: 2048 }));
 server.use(logger());
 server.use(headers());
 server.use(pageRenderers());
+
+
+if (process.env.NODE_ENV === 'development') {
+  // isomorphicPlugin.development()
+  hotReload(server);
+}
 
 export default (assets) => {
   setRoutes(assets);
