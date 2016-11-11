@@ -12,16 +12,16 @@ function game(state = {}, action) {
   const answerInt = randomRange(0, 1, 1)[0];
   const factInt = randomRange(0, 7, 1)[0];
   switch (action.type) {
-    case actions.FETCH_PEOPLE_CARDS:
+    case `${actions.FETCH_PEOPLE_CARDS}_PENDING`:
       return {
         ...state,
         loading: true
       };
-    case actions.FETCH_PEOPLE_CARDS_SUCCESS:
+    case `${actions.FETCH_PEOPLE_CARDS}_FULFILLED`:
       return {
         ...state,
-        cards: action.data,
-        QandA: getQuestionAndAnswer({ cards: action.data, answerInt, factInt }),
+        cards: action.payload,
+        QandA: getQuestionAndAnswer({ cards: action.payload, answerInt, factInt }),
         status: action.status
       };
     default:

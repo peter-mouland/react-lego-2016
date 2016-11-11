@@ -23,13 +23,14 @@ function getStaticAssets() {
     : distFiles;
 }
 
+// todo: get hmr working again :(
 export function setRoutes(assets) {
   log('adding react routes');
 
   router
     .use(publicFiles)
     .use(distFiles)
-    .use(getStaticAssets())
+    // .use(getStaticAssets())
     .use(apiRouter.routes())
     .use(apiRouter.allowedMethods())
     .use(setRouterContext())

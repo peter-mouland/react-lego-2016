@@ -7,17 +7,17 @@ import handleError from '../middleware/handle-error';
 const parseBody = koaBody();
 const apiRouter = router({ prefix: '/api' });
 
-apiRouter.get('/', function getStatus() {
-  this.type = 'json';
-  this.status = 200;
-  this.response.body = { status: 'healthy' };
+apiRouter.get('/', (ctx) => {
+  ctx.type = 'json';
+  ctx.status = 200;
+  ctx.response.body = { status: 'healthy' };
 });
 
-apiRouter.get('/game/:gameType(people|films)/:card1/:card2', parseBody, function* getCards() {
-  const cards = [this.params.card1, this.params.card2];
-  this.type = 'json';
-  this.status = 200;
-  this.response.body = yield fetchCards(this.params.gameType, cards);
+apiRouter.get('/game/:gameType(people|films)/:card1/:card2', parseBody, async (ctx) => {
+  const cards = [ctx.params.card1, ctx.params.card2];
+  ctx.type = 'json';
+  ctx.status = 200;
+  ctx.response.body = await fetchCards(ctx.params.gameType, cards);
 });
 
 apiRouter.use(handleError());

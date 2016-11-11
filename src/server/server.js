@@ -1,4 +1,4 @@
-import koa from 'koa';
+import Koa from 'koa';
 import debug from 'debug';
 import compress from 'koa-compress';
 
@@ -9,7 +9,7 @@ import pageRenderers from './middleware/page-renderers';
 import headers from './middleware/headers';
 import { router, setRoutes } from './router';
 
-const server = koa();
+const server = new Koa();
 const log = debug('lego:server.js');
 log('starting');
 

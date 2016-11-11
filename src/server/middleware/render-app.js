@@ -2,18 +2,19 @@ import React from 'react';
 import Html from '../templates/Html';
 
 export default function renderApp(assets) {
-  return function* genRenderApp(next) {
-    yield next;
+  return async (ctx, next) => {
+    await next();
     try {
-      this.body = this.renderPageToString(
+      ctx.body = ctx.renderPageToString(
         <Html
+          initialState={ctx.initialState}
           scripts={assets.javascript}
           stylesheets={assets.styles}
-          content={this.routerContext}
+          content={ctx.routerContext}
         />
       );
     } catch (error) {
-      this.body = this.render500(error);
+      ctx.body = ctx.render500(error);
     }
   };
 }

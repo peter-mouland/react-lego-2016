@@ -8,6 +8,6 @@ export function fetchPeopleCards() {
   const cards = randomRange(1, DECK, 2);
   return {
     type: FETCH_PEOPLE_CARDS,
-    promise: api.fetchCards('people', cards)
+    payload: api.fetchCards('people', cards)
   };
 }

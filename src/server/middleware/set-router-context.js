@@ -15,32 +15,32 @@ const createMarkup = (req, context, store) => renderToString(
   </Provider>
 );
 
-// todo : get this dispatch/data-request to work :(
 async function getContext(dispatch, req) {
   const { matchedRoutes, params } = matchRoutesToLocation(routes, { pathname: req.url });
-  const promises = matchedRoutes.filter((route) => route.component.needs)
-    .map((route) => route.component.needs.map((need) => dispatch(need(params))));
-  return Promise.all(promises);
+  const needs = [];
+  matchedRoutes.filter((route) => route.component.needs)
+    .map((route) => route.component.needs.forEach((need) => needs.push(need)));
+  return await Promise.all(needs.map((need) => dispatch(need(params))));
 }
 
 function setRouterContext() {
-  return function* genSetRouterContext(next) {
+  return async (ctx, next) => {
     const store = configureStore();
     const context = createServerRenderContext();
-    const markup = createMarkup(this.request, context, store);
+    const markup = createMarkup(ctx.request, context, store);
     const result = context.getResult();
     if (result.redirect) {
-      this.status = 301;
-      this.redirect(result.redirect.pathname + result.redirect.search);
+      ctx.status = 301;
+      ctx.redirect(result.redirect.pathname + result.redirect.search);
     } else {
-      getContext(store.dispatch, this.request);
-      this.status = result.missed ? 404 : 200;
-      this.initialState = store.getState();
-      this.routerContext = (result.missed)
-            ? createMarkup(this.request, context, store)
+      await getContext(store.dispatch, ctx.request);
+      ctx.status = result.missed ? 404 : 200;
+      ctx.initialState = store.getState();
+      ctx.routerContext = (result.missed)
+            ? createMarkup(ctx.request, context, store)
             : markup;
     }
-    yield next
+    await next();
   };
 }
 

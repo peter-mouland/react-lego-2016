@@ -3,24 +3,24 @@ import debug from 'debug';
 const log = debug('lego:handleError.js');
 
 export default function errorHandler(renderer) {
-  return function* genErrorHandler(next) {
+  return async (ctx, next) => {
     try {
-      yield next; // pass on the execution to downstream middlewares
+      await next(); // attempt to invoke the next middleware downstream
     } catch (err) {
       if (process.env.NODE_ENV === 'production') {
         log(err); // send to real logging system
       } else {
         log(err);
       }
-      this.response.status = err.status || 500;
+      ctx.response.status = err.status || 500;
       if (renderer) {
-        this.type = 'html';
-        this.body = this[renderer](err);
+        ctx.type = 'html';
+        ctx.body = ctx[renderer](err);
       } else {
-        this.type = 'json';
-        this.body = { error: err };
+        ctx.type = 'json';
+        ctx.body = { error: err };
       }
-      this.app.emit('error', err, this);
+      ctx.app.emit('error', err, ctx);
     }
   };
 }
