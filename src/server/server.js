@@ -23,7 +23,6 @@ server.use(pageRenderers());
 
 
 if (process.env.NODE_ENV === 'development') {
-  // isomorphicPlugin.development()
   hotReload(server);
 }
 

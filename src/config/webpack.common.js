@@ -2,14 +2,9 @@ const path = require('path');
 const webpack = require('webpack');
 const ExtractTextPlugin = require('extract-text-webpack-plugin');
 const cssnano = require('cssnano');
-const IsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
 
 const { SRC, DIST } = require('./paths');
-const isomorphicConfig = require('../config/iso-config.js');
 const vendorManifest = require('../../compiled/vendor-manifest.json');
-
-const isomorphicPlugin = new IsomorphicToolsPlugin(isomorphicConfig);
-const isDevelopment = process.env.NODE_ENV === 'development';
 
 module.exports = {
   devtool: 'eval',
@@ -26,7 +21,6 @@ module.exports = {
       context: path.join(process.cwd(), 'src'),
       manifest: vendorManifest
     }),
-    isomorphicPlugin.development(isDevelopment),
     new ExtractTextPlugin('[name].css'),
     new webpack.NoErrorsPlugin(),
     new webpack.DefinePlugin({
@@ -69,7 +63,7 @@ module.exports = {
       {
         test: /\.jsx?$/,
         include: [/src/],
-        loader: 'babel',
+        loader: 'babel-loader',
         query: {
           cacheDirectory: true
         }
@@ -79,13 +73,13 @@ module.exports = {
         include: [/src/],
         loader: ExtractTextPlugin.extract({
           fallbackLoader: 'style-loader',
-          loader: ['css', 'postcss', 'sass']
+          loader: ['css-loader', 'postcss-loader', 'sass-loader']
         })
       },
       {
         test: /\.svg$/,
         include: [/src/],
-        loaders: ['svg-inline']
+        loaders: ['svg-inline-loader']
       }
     ]
   }

@@ -26,7 +26,6 @@ export default class Html extends React.Component {
         __html: `window.__INITIAL_STATE__ = ${JSON.stringify(initialState)}`
       }} />
       <div id="html" dangerouslySetInnerHTML={{ __html: content }} />
-      <script src="/vendor.dll.js" ></script>
       {scripts.map((script, i) => <script src={script} key={ i } />)}
       </body>
       </html>
