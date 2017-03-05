@@ -1,4 +1,9 @@
-# React Lego [![CircleCI](https://circleci.com/gh/peter-mouland/react-lego.svg?style=svg)](https://circleci.com/gh/peter-mouland/react-lego)
+## _This is an archived version of react lego_
+
+_This was useful when many of the technologies had breaking changes and exciting new versions in alpha's/betas.
+With those being released now, I've archived this large repo to allow a new, smaller & cleaner, react-lego to emerge!_
+
+# React Lego (2016) [![CircleCI](https://circleci.com/gh/peter-mouland/react-lego-2016.svg?style=svg)](https://circleci.com/gh/peter-mouland/react-lego-2016)
 
 > The building blocks of a react app
 
@@ -12,9 +17,9 @@ A client-side React app which is fully tested and production ready on the `maste
 From Master, *Server-side Rendering (SSR)* has been added in the `Koa` and `Express` branches.  
 Every other branch then adds one more technology, with the smallest possible changes.
 
-All branches, have been setup with [continuous deployment](https://github.com/peter-mouland/react-lego/wiki/Continuous-Deployement).
+All branches, have been setup with [continuous deployment](https://github.com/peter-mouland/react-lego-2016/wiki/Continuous-Deployement).
 
-[>> More about the concept](https://github.com/peter-mouland/react-lego/wiki)
+[>> More about the concept](https://github.com/peter-mouland/react-lego-2016/wiki)
 
 ## Technology to Compare:
 
@@ -69,21 +74,21 @@ The react app uses [react-router](https://github.com/reactjs/react-router) v2 fo
 
 ### Preact
 
- > [Compare Preact with React](https://github.com/peter-mouland/react-lego/compare/master...preact)
+ > [Compare Preact with React](https://github.com/peter-mouland/react-lego-2016/compare/master...preact)
 
 Because of [Ben Fletcher](https://github.com/bjfletcher) and [this tweet](https://twitter.com/bjfletcher/status/776481240065114112) I thought i'd give [Preact](https://github.com/developit/preact) a shot.
 
 Turns out it was actually very easy!  After removing a few dependencies we swapped routers for [preact-router](https://github.com/developit/preact-router).
 
-[>> More about adding Preact](https://github.com/peter-mouland/react-lego/wiki/Preact)
+[>> More about adding Preact](https://github.com/peter-mouland/react-lego-2016/wiki/Preact)
 
 ## Server-side Rendering (SSR)
 
 ### Koa
 
- > [Adding Koa to React code comparison](https://github.com/peter-mouland/react-lego/compare/master...koa)
+ > [Adding Koa to React code comparison](https://github.com/peter-mouland/react-lego-2016/compare/master...koa)
 
-Using Koa, the App now renders on the server, [Compare Koa with Express](https://github.com/peter-mouland/react-lego/compare/express...koa).
+Using Koa, the App now renders on the server, [Compare Koa with Express](https://github.com/peter-mouland/react-lego-2016/compare/express...koa).
 
 ### Koa v2
 
@@ -91,24 +96,24 @@ With Async/Await around the corner and likely to be in Node v8, Koa 2 will soon 
 
 I've created a Koa v2 app to see how _all_ the branches already mentioned come together in that setup.
 
-[koa-v2-app](https://github.com/peter-mouland/react-lego/tree/koa-app)
+[koa-v2-app](https://github.com/peter-mouland/react-lego-2016/tree/koa-app)
 
 ### Express
 
- > [Adding Express to React code comparison](https://github.com/peter-mouland/react-lego/compare/master...express)
+ > [Adding Express to React code comparison](https://github.com/peter-mouland/react-lego-2016/compare/master...express)
 
-Using Express, the App now renders on the server, [Compare Express with Koa](https://github.com/peter-mouland/react-lego/compare/express...koa).
+Using Express, the App now renders on the server, [Compare Express with Koa](https://github.com/peter-mouland/react-lego-2016/compare/express...koa).
 
 ## Importing CSS
 
 In the base branches, we have simply added the CSS into webpack `entry` array to get it to convert Scss into CSS.
 these are some other ways to achieve more modular components:
 
-[>> More about the different CSS methods](https://github.com/peter-mouland/react-lego/wiki/CSS)
+[>> More about the different CSS methods](https://github.com/peter-mouland/react-lego-2016/wiki/CSS)
 
 ### CSS Imports
 
- > Based on the `universal` branch _[compare branches](https://github.com/peter-mouland/react-lego/compare/express...css-imports)_
+ > Based on the `universal` branch _[compare branches](https://github.com/peter-mouland/react-lego-2016/compare/express...css-imports)_
 
 Import your css into your component and use the class names as they are written.  
 This method is the least obtrusive and feels most like traditional css.
@@ -116,7 +121,7 @@ You must manually take care of css scope using things like BEM or Smaccs.
 
 ### CSS Modules
 
- > Based on the `universal` branch _[compare branches](https://github.com/peter-mouland/react-lego/compare/express...css-modules)_
+ > Based on the `universal` branch _[compare branches](https://github.com/peter-mouland/react-lego-2016/compare/express...css-modules)_
 
 Import your css into your components and add the class names using js object notation.
 This method completely changes the css class names output.
@@ -124,7 +129,7 @@ Scoping problems are gone, but you must specifically mark 'global' classes.
 
 ### CSS in JS
 
- > Based on the `universal` branch _[compare branches](https://github.com/peter-mouland/react-lego/compare/express...css-in-js)_
+ > Based on the `universal` branch _[compare branches](https://github.com/peter-mouland/react-lego-2016/compare/express...css-in-js)_
 
 import your css into your components as Javascript Objects.  
 Class names are a thing of the past as are scoping problems.
@@ -134,7 +139,7 @@ Class names are a thing of the past as are scoping problems.
 
 ### Webpack v2
 
-See [how to upgrade from webpack v1 to v2](https://github.com/peter-mouland/react-lego/compare/express...express--webpack-v2)
+See [how to upgrade from webpack v1 to v2](https://github.com/peter-mouland/react-lego-2016/compare/express...express--webpack-v2)
 
 There are no code differences between Koa or Express when adding Webpack v2.
 
@@ -144,10 +149,10 @@ There are no code differences between Koa or Express when adding Webpack v2.
 We are currently using [v3](https://github.com/gaearon/react-hot-loader/tree/next).
 
 See the code changes needed to :
- * [add react-hot-loader v3 to express](https://github.com/peter-mouland/react-lego/compare/express...express--react-hot-loader-v3)
- * [add react-hot-loader v3 to koa](https://github.com/peter-mouland/react-lego/compare/koa...koa--react-hot-loader-v3)
+ * [add react-hot-loader v3 to express](https://github.com/peter-mouland/react-lego-2016/compare/express...express--react-hot-loader-v3)
+ * [add react-hot-loader v3 to koa](https://github.com/peter-mouland/react-lego-2016/compare/koa...koa--react-hot-loader-v3)
 
-[>> More about adding react-hot-loader](https://github.com/peter-mouland/react-lego/wiki/react-hot-loader-v3)
+[>> More about adding react-hot-loader](https://github.com/peter-mouland/react-lego-2016/wiki/react-hot-loader-v3)
 
 ### React-Router v4
 
@@ -155,10 +160,10 @@ See the code changes needed to :
 Easy, it seems - the new syntax includes a lot for JSX which is friendly and more flexible.
 
 See the code changes needed to :
- * [Add React-router v4 to Express](https://github.com/peter-mouland/react-lego/compare/express...express--react-router-v4)
- * [Add React-router v4 to Koa](https://github.com/peter-mouland/react-lego/compare/koa...koa--react-router-v4)
+ * [Add React-router v4 to Express](https://github.com/peter-mouland/react-lego-2016/compare/express...express--react-router-v4)
+ * [Add React-router v4 to Koa](https://github.com/peter-mouland/react-lego-2016/compare/koa...koa--react-router-v4)
  
-[>> More about React-Router v4](https://github.com/peter-mouland/react-lego/wiki/React-Router-v4)
+[>> More about React-Router v4](https://github.com/peter-mouland/react-lego-2016/wiki/React-Router-v4)
 
 #### Redux
  
@@ -168,31 +173,31 @@ With Redux, the example app now has an API which can be called to return the req
 This data is now formatted inside a reducer.
 
 See the code changes needed to :
- * [Add Redux to Express](https://github.com/peter-mouland/react-lego/compare/express...express--redux)
- * [Add Redux to Koa](https://github.com/peter-mouland/react-lego/compare/koa...koa--redux)
+ * [Add Redux to Express](https://github.com/peter-mouland/react-lego-2016/compare/express...express--redux)
+ * [Add Redux to Koa](https://github.com/peter-mouland/react-lego-2016/compare/koa...koa--redux)
 
-[>> More about adding Redux](https://github.com/peter-mouland/react-lego/wiki/Redux)
+[>> More about adding Redux](https://github.com/peter-mouland/react-lego-2016/wiki/Redux)
 
 ##### Redux with Promise middleware
 
- > Based on the `redux` branch. _[compare branches](https://github.com/peter-mouland/react-lego/compare/express--redux...express--redux-promised)_
+ > Based on the `redux` branch. _[compare branches](https://github.com/peter-mouland/react-lego-2016/compare/express--redux...express--redux-promised)_
 
 This branch allows you to make async requests on the server and hydrate your redux store before rendering the page.
 The massive win here is that each container dictates what data it _needs_ while still on the server.
 
-[>> More about adding Promise middleware](https://github.com/peter-mouland/react-lego/wiki/Redux-Promise-Middleware)
+[>> More about adding Promise middleware](https://github.com/peter-mouland/react-lego-2016/wiki/Redux-Promise-Middleware)
 
 ##### Redux Dev Tools
 
- > Based on the `redux` branch. _[compare branches](https://github.com/peter-mouland/react-lego/compare/express--redux...express--redux-devtools)_
+ > Based on the `redux` branch. _[compare branches](https://github.com/peter-mouland/react-lego-2016/compare/express--redux...express--redux-devtools)_
 
 Add [Redux-DevTools](https://github.com/gaearon/redux-devtools) to the app to help debugging.
 
-[>> More about adding redux-dev-tools](https://github.com/peter-mouland/react-lego/wiki/Redux-dev-tools)
+[>> More about adding redux-dev-tools](https://github.com/peter-mouland/react-lego-2016/wiki/Redux-dev-tools)
 
 #### Importing SVG's
 
- > Based on the `universal` branch. _[compare branches](https://github.com/peter-mouland/react-lego/compare/express...svg)_
+ > Based on the `universal` branch. _[compare branches](https://github.com/peter-mouland/react-lego-2016/compare/express...svg)_
 
 Using [webpack-isomorphic-tools](https://github.com/halt-hammerzeit/webpack-isomorphic-tools) and [svg-inline-loader](https://github.com/sairion/svg-inline-loader) we are able to directly import SVGs into our JavaScript.
 This has the added benefit of :
@@ -201,4 +206,4 @@ This has the added benefit of :
  * Keep SVGs inline and style them with CSS
  * Serverside rendering of SVG's
 
-[>> More about importing SVGs](https://github.com/peter-mouland/react-lego/wiki/Importing-SVGs)
+[>> More about importing SVGs](https://github.com/peter-mouland/react-lego-2016/wiki/Importing-SVGs)
